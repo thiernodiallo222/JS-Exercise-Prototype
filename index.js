@@ -11,7 +11,7 @@
 function Airplane(name) {
   this.name = name;
   this.isFlying = false;
-}
+};
 Airplane.prototype.takeOff = function () {
   this.isFlying = true;
 };
@@ -42,27 +42,24 @@ Airplane.prototype.land = function () {
 function Person(name, age) {
   this.name = name;
   this.age = age;
-  this.stomack = [];
-}
+  this.stomach = [];
+};
 Person.prototype.eat = function (someFood) {
-  if (this.stomack.length === 10) {
-    return;
-  } else {
-     this.stomack.push(someFood);
+  if (this.stomach.length < 10) {
+    this.stomach.push(someFood);
   }
   // return this.stomack;
-}
+};
 
-Person.prototype.poop = function (){
- 
-  for (let i = 0; i < this.stomack.length; i++){
-    this.stomack.shift();
-  }
-}
+Person.prototype.poop = function () {
+  
+  return this.stomach = [];
+};
 
-Person.prototype.toString = function() {
-  return(`${this.name}, ${this.age}`);
-}
+Person.prototype.toString = function () {
+  // return(`${this.name}, ${this.age}`);
+  return (this.name + ", " + this.age);
+};
 
 /*
   TASK 2
@@ -78,25 +75,25 @@ Person.prototype.toString = function() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car(model, milesPerGalon) {
+function Car(model, milesPerGallon) {
   this.model = model;
-  this.milesPerGalon = milesPerGalon;
+  this.milesPerGallon = milesPerGallon;
   this.tank = 0;
   this.odometer = 0;
-}
+};
 Car.prototype.fill = function (gallons) {
-  this.tank = gallons;
-}
+  this.tank = this.tank + gallons;
+};
 
 Car.prototype.drive = function (distance) {
-  if (this.tank > 0) {
-    this.odometer += distance;
+  if (this.tank >= 1/29* distance) {
+    this.odometer = distance;
     // 1/29 is the gaz consumption ratio in miles per galon. 
-    this.tank = (this.tank - ((1/29) * distance));
+    this.tank = (this.tank - (1/29) * distance);
   } else {
-    return `I ran out of fuel of fuel at ${this.odometer} miles !`;
+    return `I ran out of fuel at ${this.odometer} miles !`;
   }
-}
+};
 
 /*
   TASK 3
@@ -105,17 +102,22 @@ Car.prototype.drive = function (distance) {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby(favoriteToy) {
+Baby.prototype = Object.create(Person.prototype);
+
+function Baby(name, age, favoriteToy) {
   Person.call(this, favoriteToy);
   this.favoriteToy = favoriteToy;
-}
+  this.name = name;
+  this.age = age;
+};
 
-Baby.prototype.play = function(){
+Baby.prototype.play = function () {
   return `Playing with ${this.favoriteToy}`;
-}
+  // return "Playing with " + this.favoriteToy;
+};
 
 // Baby calling method from Person so it can use it
-// Baby.prototy = Object.create(Person.prototype);
+// Baby.prototype = Object.create(Person.prototype);
 /* 
   TASK 4
 
