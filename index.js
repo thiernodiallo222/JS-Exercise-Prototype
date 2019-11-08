@@ -11,7 +11,7 @@
 function Airplane(name) {
   this.name = name;
   this.isFlying = false;
-}
+};
 Airplane.prototype.takeOff = function () {
   this.isFlying = true;
 };
@@ -39,9 +39,27 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+};
+Person.prototype.eat = function (someFood) {
+  if (this.stomach.length < 10) {
+    this.stomach.push(someFood);
+  }
+  // return this.stomack;
+};
 
-}
+Person.prototype.poop = function () {
+  
+  return this.stomach = [];
+};
+
+Person.prototype.toString = function () {
+  // return(`${this.name}, ${this.age}`);
+  return (this.name + ", " + this.age);
+};
 
 /*
   TASK 2
@@ -57,9 +75,25 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+};
+Car.prototype.fill = function (gallons) {
+  this.tank = this.tank + gallons;
+};
 
-}
+Car.prototype.drive = function (distance) {
+  if (this.tank >= 1/29* distance) {
+    this.odometer = distance;
+    // 1/29 is the gaz consumption ratio in miles per galon. 
+    this.tank = (this.tank - (1/29) * distance);
+  } else {
+    return `I ran out of fuel at ${this.odometer} miles !`;
+  }
+};
 
 /*
   TASK 3
@@ -68,18 +102,30 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+Baby.prototype = Object.create(Person.prototype);
 
-}
+function Baby(name, age, favoriteToy) {
+  Person.call(this, favoriteToy);
+  this.favoriteToy = favoriteToy;
+  this.name = name;
+  this.age = age;
+};
 
+Baby.prototype.play = function () {
+  return `Playing with ${this.favoriteToy}`;
+  // return "Playing with " + this.favoriteToy;
+};
+
+// Baby calling method from Person so it can use it
+// Baby.prototype = Object.create(Person.prototype);
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. This can be used as a global scope. When it is invoked outside of any scope, it is a global scop, called global binding, and in that case, it refers to the window object
+  2. When it is invocked within the scope of an object, it refers to that object, and it is then called implicit binding.
+  3. When calling the constructor, to create a new object out of it, the this new key word is also invoked and that invoks the this keyword.
+  4. Lastly, the this key word is invoked in a subclass in the .call methode designed to bin it to the subclass to allow the subclass to inherit all the properties of the superclass and of itself.
 */
 
 
@@ -93,3 +139,4 @@ if (typeof exports !== 'undefined') {
   if (Car) { module.exports.Car = Car }
   if (Baby) { module.exports.Baby = Baby }
 }
+ 
